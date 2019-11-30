@@ -1,0 +1,317 @@
+#include<GL/glut.h>
+#include<stdio.h>
+#include<stdlib.h>
+void makedelay(int);
+void init();
+GLint x=220,y=490,b=850;
+void myDisplay();
+void delay();
+void rendersecene();
+void title();
+void colorMenu(int id);
+void mykey(unsigned char key, int x, int y);
+float  color[4][3]={{1.0,1.0,1.0},{0.8,0.0,0.0,},{0.0,0.0,0.0},{0.0,0.0,0.8}};
+GLfloat clo[4][3]={{1.0,0.5,0.0},{1.0,0.0,1.0},{0.0,0.0,1.0},{0.0,1.0,1.0}};
+int color_Menu,p=32760,flag=1;
+
+int main(int argc,char **argv)
+{
+	glutInit(&argc,argv);
+	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+	glutInitWindowSize(5000,5000);
+	glutInitWindowPosition(0,0);
+	glutCreateWindow("CRT");
+	    glutKeyboardFunc(mykey);
+glutCreateMenu(colorMenu);
+glutAddMenuEntry("START",1);
+glutAddMenuEntry("STOP",2);
+glutAttachMenu(GLUT_RIGHT_BUTTON);
+glutDisplayFunc(rendersecene);
+init();
+glutMainLoop();
+	return 0;
+}
+
+void delay()
+{
+    int i,j;
+    for(i=0;i<5000;i++)
+        for(j=0;j<5000;j++)
+            ;
+}
+
+void drawstring(float x,float y,char *string,int col)
+{
+    char *c;
+    glColor3fv(color[col]);
+    glRasterPos2f(x,y);
+    for(c=string;*c!='\0';c++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_24s,*c);
+    }
+}
+void title()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(1.0,0.0,0.0);
+    drawstring(50.0,900.0,"CRT",1);
+    drawstring(50.0,850.0,"NAME :   ROHAN K M  ,  ROHAN R G ",3);
+    drawstring(50.0,800.0,"UNIVERSITY NUMBER :4SU16CS089 ,  4SU16CS090 ",3);
+	drawstring(50.0,750.0,"GUIDED BY : ARJUN K ",3);
+	  drawstring(50.0,700.0,"COLLEGE : SDMIT",3);
+    drawstring(150.0,550.0,"(Click Right Mouse Button For Options)",2);
+   drawstring(150.0,600.0,"(Press S to Start)",2);
+    drawstring(150.0,650.0,"(Press q to quit)",2);
+    glFlush();
+}
+void rendersecene()
+{
+    if(flag)
+    {
+        int d=10;
+        title();
+        while(d>0)
+        {
+            delay();
+            d--;
+        }
+        flag=0;
+    }
+}
+void init()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(1.0,1.0,1.0,0.0);
+    glColor3f(0.0,1.0,1.0);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0.0,1000.0,0.0,1000.0);
+}
+
+void colorMenu(int id)
+{ int i, c,d;
+switch(id)
+{
+case 1:glBegin(GL_LINES);
+	glLineWidth(500);
+		glColor3f(1.0,1.0,1.0);	
+		for(i=0; i<=600 ;i++)
+		{
+			glVertex2i(x+i,y);
+			glVertex2i(x+i+10,y);
+			
+		}	
+		glEnd();
+
+glBegin(GL_LINES);
+
+//side upper cross line
+		for(i=0;i<=15;i++)
+		{
+//glColor3fv(clo[rand()%4]);
+
+			if(b>=150)
+	{	
+//glColor3fv(clo[rand()%4]);
+	glVertex2f(700,490);
+	glVertex2f(900,b);
+glColor3fv(clo[rand()%4]);
+		glVertex2f(900,850);
+		glVertex2f(900,130);
+
+	b-=50;
+	}		
+	else
+	{
+		glVertex2f(700,490);
+		glVertex2f(900,130);
+	}
+		}
+glEnd();
+glPointSize(5);
+glColor3fv(clo[rand()%4]);
+glBegin(GL_POINTS);
+//glColor3f(1.0,0.5,1.0);
+glVertex2f(335,425);
+glVertex2f(360,445);
+glVertex2f(353,455);
+glVertex2f(375,435);
+glVertex2f(325,485);
+glVertex2f(345,475);
+glVertex2f(375,470);
+glVertex2f(375,535);
+glVertex2f(335,555);
+glVertex2f(348,549);
+glVertex2f(356,515);
+glEnd();
+
+break;
+case 2:myDisplay();
+break;
+}
+}
+void mykey(unsigned char key, int x, int y) {
+  
+    if ((key == 'S' || key == 's')) {
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(1.0, 1.0, 1.0, 1.0);
+myDisplay();
+        glFlush();
+
+}
+     else if ((key == 'Q' || key == 'q') ) {
+exit(0);
+
+}
+}
+void myDisplay()
+{ 
+	
+int i;
+
+
+	glClear(GL_COLOR_BUFFER_BIT);
+	glBegin(GL_QUADS);///big box
+	glColor3f(0.0,0.0,0.0);	
+	glVertex2f(150,380);
+	glVertex2f(150,600);
+	glVertex2f(700,600);
+	glVertex2f(700,380);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glColor3f(0.0,1.0,1.0);
+	glVertex2f(300,520);
+	glVertex2f(300,580);
+	glVertex2f(320,580);
+	glVertex2f(320,520);
+	glVertex2f(320,580);
+	glVertex2f(400,580);
+	glVertex2f(400,560);
+	glVertex2f(320,560);
+	glVertex2f(380,580);
+	glVertex2f(400,580);
+	glVertex2f(400,520);
+	glVertex2f(380,520);
+	glEnd();
+
+glBegin(GL_QUADS);
+glColor3f(0.0,1.0,1.0);
+glVertex2f(300,400);
+glVertex2f(300,460);
+glVertex2f(320,460);
+glVertex2f(320,400);
+glVertex2f(320,400);
+glVertex2f(320,420);
+glVertex2f(380,420);
+glVertex2f(380,400);
+glVertex2f(380,400);
+glVertex2f(400,400);
+glVertex2f(400,460);
+glVertex2f(380,460);
+glEnd();
+
+glBegin(GL_QUADS);///PLATES 
+glColor3f(0.8,0.8,0.8);
+glVertex2f(440,450);
+glVertex2f(440,550);
+glVertex2f(480,560);
+glVertex2f(480,440);
+glEnd();
+
+glBegin(GL_QUADS);
+glColor3f(1.0,1.0,1.0);
+glVertex2f(450,460);
+glVertex2f(450,560);
+glVertex2f(490,570);
+glVertex2f(490,450);
+glEnd();
+glBegin(GL_QUADS);///plates
+glColor3f(1.0,1.0,1.0);
+glVertex2f(500,530);
+glVertex2f(530,550);
+glVertex2f(620,550);
+glVertex2f(590,530);
+glEnd();
+
+glBegin(GL_LINES);//////////////////////////////////screen////////////////
+glColor3f(0.0,0.0,0.0);
+	glVertex2f(900,850);
+glVertex2f(900,130);
+glEnd();
+
+
+glBegin(GL_QUADS);///plates
+glColor3f(1.0,1.0,1.0);
+glVertex2f(500,430);
+glVertex2f(530,450);
+glVertex2f(620,450);
+glVertex2f(590,430);
+glEnd();
+
+	
+	glBegin(GL_LINES);//side upper cross line
+	glColor3f(0.0,0.0,0.0);
+	glVertex2f(700,600);
+	glVertex2f(900,850);
+	glEnd();
+
+	
+	glBegin(GL_LINES);//side lower cross line
+glColor3f(0.0,0.0,0.0);	
+	glVertex2f(700,380);
+	glVertex2f(900,130);
+	glEnd();	
+		
+	////////this is between big box and connector
+	glBegin(GL_QUADS);	
+	glColor3f(1.0,0.0,0.0);
+	glVertex2f(100,380);
+	glVertex2f(100,600);
+	glVertex2f(150,600);
+	glVertex2f(150,380);
+	glEnd();
+	
+	glBegin(GL_QUADS);
+	glColor3f(0.0,0.0,1.0);	
+	glVertex2f(150,460);
+	glVertex2f(150,520);
+	glVertex2f(220,520);
+	glVertex2f(220,460);
+	glEnd();
+//////////////////////////////////////////////////////////////////////////////////////connectors
+
+	glBegin(GL_QUADS);	
+	glColor3f(0.5,0.5,0.0);
+	glVertex2f(50,400);
+	glVertex2f(50,430);
+	glVertex2f(100,430);
+	glVertex2f(100,400);
+	glEnd();
+
+         glBegin(GL_QUADS);	
+	glColor3f(0.5,0.5,0.0);
+	glVertex2f(50,450);
+	glVertex2f(50,480);
+	glVertex2f(100,480);
+	glVertex2f(100,450);
+	glEnd();
+
+	glBegin(GL_QUADS);	
+	glColor3f(0.5,0.5,0.0);
+	glVertex2f(50,500);
+	glVertex2f(50,530);
+	glVertex2f(100,530);
+	glVertex2f(100,500);
+	glEnd();
+
+	glBegin(GL_QUADS);	
+	glColor3f(0.5,0.5,0.0);
+	glVertex2f(50,550);
+	glVertex2f(50,580);
+	glVertex2f(100,580);
+	glVertex2f(100,550);
+	glEnd();
+	glFlush();
+}	
